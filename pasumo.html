@@ -52,7 +52,7 @@
       display: block;
     }
 
-    /* --- 画面1専用レイアウト（上部余白なし＋下部スクロール） --- */
+    /* --- 画面1専用レイアウト（バナー非表示＋上部固定＋下部スクロール） --- */
     #screen1 {
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
@@ -60,6 +60,7 @@
     .screen1-content {
       position: relative;
       width: 100%;
+      margin-top: -125px; 
     }
     .screen1-content img {
       width: 100%;
@@ -68,13 +69,13 @@
       image-rendering: -webkit-optimize-contrast;
     }
 
-    /* --- 上部固定ヘッダー（PASMOロゴ付近を固定） --- */
+    /* --- 上部固定ヘッダー（PASMOロゴまでを固定し、バナーを隠す） --- */
     .sticky-header-mask {
       position: sticky;
       top: 0;
       left: 0;
       width: 100%;
-      height: 110px; /* 固定するヘッダーの高さ */
+      height: 85px; 
       overflow: hidden;
       z-index: 50;
       background-color: #fff;
@@ -94,33 +95,30 @@
       image-rendering: -webkit-optimize-contrast;
     }
 
-    /* --- タップエリア（位置確認用赤枠） --- */
+    /* --- タップエリア（完全に透明） --- */
     .hotspot {
       position: absolute;
       cursor: pointer;
       z-index: 100;
-      background-color: rgba(255, 0, 0, 0.25);
-      border: 1px solid red;
+      background-color: transparent;
+      border: none;
     }
 
-    /* --- 画面1のタップ位置（画像全体の高さを基準にした正しい相対位置） --- */
-    /* 鉄道定期券（中央の大きな白い枠） */
+    /* --- 画面1のタップ位置 --- */
     #screen1 .spot-train-pass { 
-      top: 57.5%; 
+      top: 54.5%; 
       left: 5%; 
       width: 90%; 
       height: 13%; 
     }
-    /* 詳細（右上 i アイコン） */
     #screen1 .spot-details { 
-      top: 45.5%; 
+      top: 42.5%; 
       left: 79%; 
       width: 16%; 
       height: 9%; 
     }
-    /* 定期券メニュー（中央下のボタン） */
     #screen1 .spot-pass-menu { 
-      top: 71%; 
+      top: 68%; 
       left: 31%; 
       width: 38%; 
       height: 7%; 
@@ -149,7 +147,7 @@
         <img src="1.jpg" alt="ヘッダー固定">
       </div>
       <!-- スクロールする本体画像とタップ領域 -->
-      <div class="screen1-content" style="margin-top: -110px;">
+      <div class="screen1-content">
         <img src="1.jpg" alt="画面1">
         <div class="hotspot spot-train-pass" onclick="goToScreen('screen2')"></div>
         <div class="hotspot spot-details" onclick="goToScreen('screen4')"></div>
@@ -161,40 +159,4 @@
     <div id="screen2" class="screen screen-normal">
       <img src="2.jpg" alt="画面2">
       <div class="hotspot spot-train-menu" onclick="goToScreen('screen3')"></div>
-      <div class="hotspot spot-close" onclick="goToScreen('screen1')"></div>
-    </div>
-
-    <!-- 画面 3 -->
-    <div id="screen3" class="screen screen-normal">
-      <img src="3.jpg" alt="画面3">
-      <div class="hotspot spot-back" onclick="goToScreen('screen1')"></div>
-    </div>
-
-    <!-- 画面 4 -->
-    <div id="screen4" class="screen screen-normal">
-      <img src="4.jpg" alt="画面4">
-      <div class="hotspot spot-train-pass" onclick="goToScreen('screen3')"></div>
-      <div class="hotspot spot-back" onclick="goToScreen('screen1')"></div>
-    </div>
-
-    <!-- 画面 5 -->
-    <div id="screen5" class="screen screen-normal">
-      <img src="5.jpg" alt="画面5">
-      <div class="hotspot spot-train-pass" onclick="goToScreen('screen3')"></div>
-      <div class="hotspot spot-close" onclick="goToScreen('screen1')"></div>
-    </div>
-  </div>
-
-  <script>
-    function goToScreen(screenId) {
-      const screens = document.querySelectorAll('.screen');
-      screens.forEach(s => s.classList.remove('active'));
-      
-      const targetScreen = document.getElementById(screenId);
-      if (targetScreen) {
-        targetScreen.classList.add('active');
-      }
-    }
-  </script>
-</body>
-</html>
+      <div class="hotspot
