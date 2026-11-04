@@ -39,9 +39,6 @@
       height: 100dvh;
       background-color: #fff;
       overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
     .screen {
       position: absolute;
@@ -50,21 +47,20 @@
       width: 100%;
       height: 100%;
       display: none;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
     .screen.active {
       display: block;
     }
 
-    /* --- 画面1専用レイアウト（バナーあり＋上部固定＋下部スクロール） --- */
+    /* --- 画面1専用レイアウト（上部固定＋下部スクロール） --- */
     #screen1 {
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
       display: none;
     }
     #screen1.active {
       display: block;
     }
-    /* 上部の固定ヘッダー */
     .sticky-header-mask {
       position: sticky;
       top: 0;
@@ -80,7 +76,6 @@
       height: auto;
       display: block;
     }
-    /* スクロールする本体画像 */
     .screen1-content {
       position: relative;
       width: 100%;
@@ -93,37 +88,17 @@
       image-rendering: -webkit-optimize-contrast;
     }
 
-    /* --- スクロール型画面（画面8など縦長画像用） --- */
-    .screen-scrollable {
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    .screen-scrollable-content {
+    /* --- 通常画面（2〜7）のコンテナ構造 --- */
+    .screen-inner {
       position: relative;
       width: 100%;
+      min-height: 100%;
+      background-color: #fff;
     }
-    .screen-scrollable-content img {
+    .screen-inner img {
       width: 100%;
       height: auto;
       display: block;
-      image-rendering: -webkit-optimize-contrast;
-    }
-
-    /* --- 通常画面（画面2〜5, 6, 7） --- */
-    .screen-normal {
-      display: none;
-      justify-content: center;
-      align-items: center;
-      background-color: #fff;
-    }
-    .screen-normal.active {
-      display: flex;
-    }
-    .screen-normal img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      pointer-events: none;
       image-rendering: -webkit-optimize-contrast;
     }
 
@@ -137,42 +112,36 @@
     }
 
     /* --- 画面1のタップ位置 --- */
-    /* 左上三本線メニュー */
     #screen1 .spot-menu { top: 0%; left: 0%; width: 22%; height: 6%; z-index: 150; }
-    /* 鉄道定期券 */
     #screen1 .spot-train-pass { top: 57.5%; left: 5%; width: 90%; height: 13%; }
-    /* 詳細（iアイコン） */
     #screen1 .spot-details { top: 45.5%; left: 79%; width: 16%; height: 9%; }
-    /* 残額履歴 */
     #screen1 .spot-history { top: 45.5%; left: 60%; width: 18%; height: 9%; }
-    /* 定期券メニュー */
     #screen1 .spot-pass-menu { top: 71%; left: 31%; width: 38%; height: 7%; }
-    /* チャージ（入金）ボタン */
     #screen1 .spot-charge { top: 82.5%; left: 19%; width: 62%; height: 8%; }
 
-    /* --- 画面2〜5のタップ位置 --- */
+    /* --- 画面2のタップ位置 --- */
     #screen2 .spot-train-menu { top: 86.5%; left: 32%; width: 36%; height: 4%; }
     #screen2 .spot-close { top: 41.5%; left: 86%; width: 10%; height: 4%; }
 
+    /* --- 画面3のタップ位置 --- */
     #screen3 .spot-back { top: 5.5%; left: 0%; width: 22%; height: 5%; }
 
+    /* --- 画面4のタップ位置 --- */
     #screen4 .spot-train-pass { top: 85.5%; left: 5%; width: 90%; height: 5%; }
     #screen4 .spot-back { top: 5.5%; left: 0%; width: 22%; height: 5%; }
 
+    /* --- 画面5のタップ位置 --- */
     #screen5 .spot-train-pass { top: 76%; left: 5%; width: 90%; height: 6%; }
     #screen5 .spot-close { top: 63.5%; left: 86%; width: 10%; height: 4%; }
 
     /* --- 画面6（サイドメニュー）のタップ位置 --- */
-    /* 右側グレー背景のタップで画面1へ */
-    #screen6 .spot-overlay-close { top: 0%; left: 59%; width: 41%; height: 100%; }
+    #screen6 .spot-overlay-close { top: 0%; left: 59%; width: 41%; height: 100%; position: absolute; }
 
     /* --- 画面7（チャージ）のタップ位置 --- */
-    /* 右上×ボタン */
     #screen7 .spot-close { top: 20.5%; left: 85%; width: 12%; height: 5%; }
 
     /* --- 画面8（残額履歴）のタップ位置 --- */
-    /* 左上戻るボタン（固定位置） */
-    #screen8 .spot-back { top: 5.5%; left: 0%; width: 22%; height: 5%; position: fixed; }
+    #screen8 .spot-back { top: 5.5%; left: 0%; width: 22%; height: 5%; position: fixed; z-index: 200; }
   </style>
 </head>
 <body>
@@ -180,13 +149,10 @@
   <div class="app-container">
     <!-- 画面 1 -->
     <div id="screen1" class="screen active">
-      <!-- 固定されるヘッダー部分 -->
       <div class="sticky-header-mask">
         <img src="1.jpg" alt="ヘッダー固定">
-        <!-- 固定ヘッダー上のメニュータップ領域 -->
         <div class="hotspot spot-menu" onclick="goToScreen('screen6')"></div>
       </div>
-      <!-- スクロールする本体画像とタップ領域 -->
       <div class="screen1-content">
         <img src="1.jpg" alt="画面1">
         <div class="hotspot spot-train-pass" onclick="goToScreen('screen2')"></div>
@@ -198,49 +164,61 @@
     </div>
 
     <!-- 画面 2 -->
-    <div id="screen2" class="screen screen-normal">
-      <img src="2.jpg" alt="画面2">
-      <div class="hotspot spot-train-menu" onclick="goToScreen('screen3')"></div>
-      <div class="hotspot spot-close" onclick="goToScreen('screen1')"></div>
+    <div id="screen2" class="screen">
+      <div class="screen-inner">
+        <img src="2.jpg" alt="画面2">
+        <div class="hotspot spot-train-menu" onclick="goToScreen('screen3')"></div>
+        <div class="hotspot spot-close" onclick="goToScreen('screen1')"></div>
+      </div>
     </div>
 
     <!-- 画面 3 -->
-    <div id="screen3" class="screen screen-normal">
-      <img src="3.jpg" alt="画面3">
-      <div class="hotspot spot-back" onclick="goToScreen('screen1')"></div>
+    <div id="screen3" class="screen">
+      <div class="screen-inner">
+        <img src="3.jpg" alt="画面3">
+        <div class="hotspot spot-back" onclick="goToScreen('screen1')"></div>
+      </div>
     </div>
 
     <!-- 画面 4 -->
-    <div id="screen4" class="screen screen-normal">
-      <img src="4.jpg" alt="画面4">
-      <div class="hotspot spot-train-pass" onclick="goToScreen('screen3')"></div>
-      <div class="hotspot spot-back" onclick="goToScreen('screen1')"></div>
+    <div id="screen4" class="screen">
+      <div class="screen-inner">
+        <img src="4.jpg" alt="画面4">
+        <div class="hotspot spot-train-pass" onclick="goToScreen('screen3')"></div>
+        <div class="hotspot spot-back" onclick="goToScreen('screen1')"></div>
+      </div>
     </div>
 
     <!-- 画面 5 -->
-    <div id="screen5" class="screen screen-normal">
-      <img src="5.jpg" alt="画面5">
-      <div class="hotspot spot-train-pass" onclick="goToScreen('screen3')"></div>
-      <div class="hotspot spot-close" onclick="goToScreen('screen1')"></div>
+    <div id="screen5" class="screen">
+      <div class="screen-inner">
+        <img src="5.jpg" alt="画面5">
+        <div class="hotspot spot-train-pass" onclick="goToScreen('screen3')"></div>
+        <div class="hotspot spot-close" onclick="goToScreen('screen1')"></div>
+      </div>
     </div>
 
     <!-- 画面 6（サイドメニュー） -->
-    <div id="screen6" class="screen screen-normal">
-      <img src="6.jpg" alt="画面6">
-      <div class="hotspot spot-overlay-close" onclick="goToScreen('screen1')"></div>
+    <div id="screen6" class="screen">
+      <div class="screen-inner" style="height: 100%;">
+        <img src="6.jpg" alt="画面6" style="height: 100%; object-fit: cover;">
+        <div class="hotspot spot-overlay-close" onclick="goToScreen('screen1')"></div>
+      </div>
     </div>
 
     <!-- 画面 7（チャージ） -->
-    <div id="screen7" class="screen screen-normal">
-      <img src="7.jpg" alt="画面7">
-      <div class="hotspot spot-close" onclick="goToScreen('screen1')"></div>
+    <div id="screen7" class="screen">
+      <div class="screen-inner">
+        <img src="7.jpg" alt="画面7">
+        <div class="hotspot spot-close" onclick="goToScreen('screen1')"></div>
+      </div>
     </div>
 
     <!-- 画面 8（残額履歴） -->
-    <div id="screen8" class="screen screen-scrollable">
-      <div class="screen-scrollable-content">
-        <img src="8.jpg" alt="画面8">
+    <div id="screen8" class="screen">
+      <div class="screen-inner">
         <div class="hotspot spot-back" onclick="goToScreen('screen1')"></div>
+        <img src="8.jpg" alt="画面8">
       </div>
     </div>
   </div>
@@ -253,7 +231,6 @@
       const targetScreen = document.getElementById(screenId);
       if (targetScreen) {
         targetScreen.classList.add('active');
-        // 画面切り替え時にスクロール位置を最上部にリセット
         targetScreen.scrollTop = 0;
       }
     }
