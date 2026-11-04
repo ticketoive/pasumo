@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>PASMO画面遷移</title>
   
   <!-- アプリ風（フルスクリーン）にする設定 -->
@@ -19,25 +19,26 @@
       padding: 0;
       -webkit-tap-highlight-color: transparent;
     }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #fff;
+      position: fixed;
+    }
     body {
-      background-color: #222;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
     .app-container {
       position: relative;
       width: 100vw;
       max-width: 430px;
-      height: 100vh;
-      max-height: 932px;
-      background-color: #000;
+      height: 100dvh;
+      background-color: #fff;
       overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
     .screen {
       position: absolute;
@@ -46,14 +47,58 @@
       width: 100%;
       height: 100%;
       display: none;
+      overflow-y: auto; /* 上部固定以外の画面や、通常表示時の備え */
+      -webkit-overflow-scrolling: touch;
     }
     .screen.active {
       display: block;
     }
-    .screen img {
+
+    /* --- 画面1専用のレイアウト（上部固定 ＋ 下部スクロール） --- */
+    #screen1 {
+      display: none;
+      flex-direction: column;
+      overflow: hidden; /* 画面全体としてのスクロールを防止 */
+    }
+    #screen1.active {
+      display: flex;
+    }
+    /* 上部の固定エリア（PASMO文字あたりまでを切り抜いて固定表示） */
+    .screen1-header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 130px; /* 固定する高さの調整用 */
+      overflow: hidden;
+      z-index: 50;
+      background: #fff;
+      flex-shrink: 0;
+    }
+    .screen1-header img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    /* 下部のスクロールエリア */
+    .screen1-scrollable {
+      position: relative;
+      width: 100%;
+      flex-grow: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .screen1-scrollable img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* --- その他の画面（2〜5） --- */
+    .screen-normal img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: fill;
       pointer-events: none;
     }
 
@@ -66,11 +111,12 @@
       border: none;
     }
 
-    /* --- 各画面のタップ位置 --- */
-    #screen1 .spot-train-pass { top: 57.5%; left: 5%; width: 90%; height: 13%; }
-    #screen1 .spot-details { top: 45.5%; left: 79%; width: 16%; height: 9%; }
-    #screen1 .spot-pass-menu { top: 71%; left: 31%; width: 38%; height: 7%; }
+    /* --- 画面1内のタップ位置（スクロール領域内での位置） --- */
+    #screen1 .spot-train-pass { top: 38%; left: 5%; width: 90%; height: 13%; }
+    #screen1 .spot-details { top: 23%; left: 79%; width: 16%; height: 9%; }
+    #screen1 .spot-pass-menu { top: 58%; left: 31%; width: 38%; height: 7%; }
 
+    /* --- 画面2〜5のタップ位置 --- */
     #screen2 .spot-train-menu { top: 86.5%; left: 32%; width: 36%; height: 4%; }
     #screen2 .spot-close { top: 41.5%; left: 86%; width: 10%; height: 4%; }
 
@@ -86,36 +132,43 @@
 <body>
 
   <div class="app-container">
-    <!-- 画面 1 -->
+    <!-- 画面 1（上部固定 ＋ 下部スクロール構造） -->
     <div id="screen1" class="screen active">
-      <img src="1.jpg" alt="画面1">
-      <div class="hotspot spot-train-pass" onclick="goToScreen('screen2')"></div>
-      <div class="hotspot spot-details" onclick="goToScreen('screen4')"></div>
-      <div class="hotspot spot-pass-menu" onclick="goToScreen('screen5')"></div>
+      <!-- 固定するヘッダー（PASMO文字より上） -->
+      <div class="screen1-header">
+        <img src="1.jpg" alt="画面1 ヘッダー">
+      </div>
+      <!-- スクロールできる下部エリア -->
+      <div class="screen1-scrollable">
+        <img src="1.jpg" alt="画面1 ボディ" style="margin-top: -130px;">
+        <div class="hotspot spot-train-pass" onclick="goToScreen('screen2')"></div>
+        <div class="hotspot spot-details" onclick="goToScreen('screen4')"></div>
+        <div class="hotspot spot-pass-menu" onclick="goToScreen('screen5')"></div>
+      </div>
     </div>
 
     <!-- 画面 2 -->
-    <div id="screen2" class="screen">
+    <div id="screen2" class="screen screen-normal">
       <img src="2.jpg" alt="画面2">
       <div class="hotspot spot-train-menu" onclick="goToScreen('screen3')"></div>
       <div class="hotspot spot-close" onclick="goToScreen('screen1')"></div>
     </div>
 
     <!-- 画面 3 -->
-    <div id="screen3" class="screen">
+    <div id="screen3" class="screen screen-normal">
       <img src="3.jpg" alt="画面3">
       <div class="hotspot spot-back" onclick="goToScreen('screen1')"></div>
     </div>
 
     <!-- 画面 4 -->
-    <div id="screen4" class="screen">
+    <div id="screen4" class="screen screen-normal">
       <img src="4.jpg" alt="画面4">
       <div class="hotspot spot-train-pass" onclick="goToScreen('screen3')"></div>
       <div class="hotspot spot-back" onclick="goToScreen('screen1')"></div>
     </div>
 
     <!-- 画面 5 -->
-    <div id="screen5" class="screen">
+    <div id="screen5" class="screen screen-normal">
       <img src="5.jpg" alt="画面5">
       <div class="hotspot spot-train-pass" onclick="goToScreen('screen3')"></div>
       <div class="hotspot spot-close" onclick="goToScreen('screen1')"></div>
