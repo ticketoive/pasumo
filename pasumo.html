@@ -4,6 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>PASMO画面遷移</title>
+  
+  <!-- アプリ風（フルスクリーン）にする設定 -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  
+  <!-- ホーム画面のアイコン設定 -->
+  <link rel="apple-touch-icon" href="icon.jpeg">
+
   <style>
     * {
       box-sizing: border-box;
@@ -58,75 +66,21 @@
       border: none;
     }
 
-    /* --- 画面1（1.jpg）のタップ位置 --- */
-    #screen1 .spot-train-pass {
-      top: 57.5%;
-      left: 5%;
-      width: 90%;
-      height: 13%;
-    }
-    #screen1 .spot-details {
-      top: 45.5%;
-      left: 79%;
-      width: 16%;
-      height: 9%;
-    }
-    #screen1 .spot-pass-menu {
-      top: 71%;
-      left: 31%;
-      width: 38%;
-      height: 7%;
-    }
+    /* --- 各画面のタップ位置 --- */
+    #screen1 .spot-train-pass { top: 57.5%; left: 5%; width: 90%; height: 13%; }
+    #screen1 .spot-details { top: 45.5%; left: 79%; width: 16%; height: 9%; }
+    #screen1 .spot-pass-menu { top: 71%; left: 31%; width: 38%; height: 7%; }
 
-    /* --- 画面2（2.jpg）のタップ位置 --- */
-    #screen2 .spot-train-menu {
-      top: 86.5%;
-      left: 32%;
-      width: 36%;
-      height: 4%;
-    }
-    #screen2 .spot-close {
-      top: 41.5%;
-      left: 86%;
-      width: 10%;
-      height: 4%;
-    }
+    #screen2 .spot-train-menu { top: 86.5%; left: 32%; width: 36%; height: 4%; }
+    #screen2 .spot-close { top: 41.5%; left: 86%; width: 10%; height: 4%; }
 
-    /* --- 画面3（3.jpg）のタップ位置 --- */
-    #screen3 .spot-back {
-      top: 5.5%;
-      left: 0%;
-      width: 22%;
-      height: 5%;
-    }
+    #screen3 .spot-back { top: 5.5%; left: 0%; width: 22%; height: 5%; }
 
-    /* --- 画面4（4.jpg）のタップ位置 --- */
-    #screen4 .spot-train-pass {
-      top: 85.5%;
-      left: 5%;
-      width: 90%;
-      height: 5%;
-    }
-    #screen4 .spot-back {
-      top: 5.5%;
-      left: 0%;
-      width: 22%;
-      height: 5%;
-    }
+    #screen4 .spot-train-pass { top: 85.5%; left: 5%; width: 90%; height: 5%; }
+    #screen4 .spot-back { top: 5.5%; left: 0%; width: 22%; height: 5%; }
 
-    /* --- 画面5（5.jpg）のタップ位置 --- */
-    #screen5 .spot-train-pass {
-      top: 76%;
-      left: 5%;
-      width: 90%;
-      height: 6%;
-    }
-    #screen5 .spot-close {
-      top: 63.5%;
-      left: 86%;
-      width: 10%;
-      height: 4%;
-    }
+    #screen5 .spot-train-pass { top: 76%; left: 5%; width: 90%; height: 6%; }
+    #screen5 .spot-close { top: 63.5%; left: 86%; width: 10%; height: 4%; }
   </style>
 </head>
 <body>
