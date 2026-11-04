@@ -39,6 +39,9 @@
       height: 100dvh;
       background-color: #fff;
       overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     .screen {
       position: absolute;
@@ -56,8 +59,12 @@
     #screen1 {
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
+      display: none;
     }
-    /* 上部の固定ヘッダー（PASMOロゴとエラーバナーを含めて固定） */
+    #screen1.active {
+      display: block;
+    }
+    /* 上部の固定ヘッダー（バナー含む） */
     .sticky-header-mask {
       position: sticky;
       top: 0;
@@ -86,11 +93,20 @@
       image-rendering: -webkit-optimize-contrast;
     }
 
-    /* --- その他の画面（2〜5） --- */
+    /* --- その他の画面（2〜5）の縮尺崩れ防止 --- */
+    .screen-normal {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+    }
+    .screen-normal.active {
+      display: flex;
+    }
     .screen-normal img {
       width: 100%;
       height: 100%;
-      object-fit: fill;
+      object-fit: contain; /* 縦横比を崩さず綺麗に収める */
       pointer-events: none;
       image-rendering: -webkit-optimize-contrast;
     }
@@ -104,7 +120,7 @@
       border: none;
     }
 
-    /* --- 画面1のタップ位置（バナーありの状態に合わせた位置） --- */
+    /* --- 画面1のタップ位置 --- */
     #screen1 .spot-train-pass { 
       top: 57.5%; 
       left: 5%; 
