@@ -1,0 +1,123 @@
+<!-- ... existing code ... -->
+<body class="bg-slate-900 min-h-screen flex flex-col items-center justify-center p-0 sm:p-4 text-gray-800">
+
+    <!-- Screen Navigation Guide Bar -->
+    <div class="mb-3 text-white text-xs flex gap-2 items-center bg-slate-800/80 px-4 py-2 rounded-full border border-slate-700 shadow-md">
+        <span class="font-bold text-pink-400">操作方法:</span> 画像内のボタン（「鉄道定期券」「詳細」「定期券メニュー」「戻る」等）をタップして画面遷移できます
+    </div>
+
+    <!-- Mobile Device Frame -->
+    <div class="w-full max-w-[390px] h-[100vh] sm:h-[844px] bg-black sm:rounded-[48px] shadow-2xl overflow-hidden relative border-0 sm:border-[8px] border-slate-800">
+        
+        <!-- ========================================== -->
+        <!-- SCREEN 1: 画面1（メイン画面 + 定期券情報モーダル付き） -->
+        <!-- ========================================== -->
+        <div id="screen-1" class="page-transition absolute inset-0 w-full h-full bg-black">
+            <img src="watermarked_img_339835301780178494.jpg" class="w-full h-full object-cover select-none" alt="Screen 1">
+            
+            <!-- Hotspot: 画面1の「鉄道定期券」または「鉄道定期券メニュー」 -> 画面3 (鉄道定期券情報モーダル/詳細) -->
+            <div id="s1-to-s3" class="absolute left-[8%] top-[60%] w-[84%] h-[12%] cursor-pointer hover:bg-pink-500/10 rounded-xl transition-all" title="鉄道定期券情報へ"></div>
+
+            <!-- Hotspot: 画面1の「定期券メニュー」 -> 画面5 (定期券購入/払いもどしメニュー) -->
+            <div id="s1-to-s5" class="absolute left-[8%] top-[74%] w-[84%] h-[10%] cursor-pointer hover:bg-pink-500/10 rounded-xl transition-all" title="定期券メニューへ"></div>
+
+            <!-- Hotspot: 画面1の「詳細」アイコン領域 -> 画面4 (PASMO詳細) -->
+            <div id="s1-to-s4" class="absolute right-[8%] top-[45%] w-[20%] h-[10%] cursor-pointer hover:bg-pink-500/10 rounded-full transition-all" title="詳細へ"></div>
+        </div>
+
+
+        <!-- ========================================== -->
+        <!-- SCREEN 3: 画面3（鉄道定期券情報） -->
+        <!-- ========================================== -->
+        <div id="screen-3" class="page-transition absolute inset-0 w-full h-full bg-black hidden">
+            <img src="watermarked_img_753391968628442749.jpg" class="w-full h-full object-cover select-none" alt="Screen 3">
+            
+            <!-- Hotspot: 「×」ボタン -> 画面1へ戻る -->
+            <div id="s3-close" class="absolute right-[6%] top-[41%] w-[12%] h-[6%] cursor-pointer hover:bg-pink-500/10 rounded-full transition-all" title="閉じる"></div>
+
+            <!-- Hotspot: 下部背景エリアのタップ -> 画面1へ戻る -->
+            <div id="s3-bg-close" class="absolute left-0 top-0 w-full h-[40%] cursor-pointer" title="背景タップで閉じる"></div>
+
+            <!-- Hotspot: 下部の「鉄道定期券メニュー」リンク -> 画面5へ -->
+            <div id="s3-to-s5" class="absolute left-[20%] top-[86%] w-[60%] h-[5%] cursor-pointer hover:bg-pink-500/10 rounded-xl transition-all" title="鉄道定期券メニューへ"></div>
+        </div>
+
+
+        <!-- ========================================== -->
+        <!-- SCREEN 4: 画面4（PASMO詳細） -->
+        <!-- ========================================== -->
+        <div id="screen-4" class="page-transition absolute inset-0 w-full h-full bg-black hidden">
+            <img src="watermarked_img_14611108574038280126.jpg" class="w-full h-full object-cover select-none" alt="Screen 4">
+            
+            <!-- Hotspot: 左上「＜ 戻る」 -> 画面1へ戻る -->
+            <div id="s4-back" class="absolute left-[2%] top-[5%] w-[25%] h-[6%] cursor-pointer hover:bg-pink-500/10 rounded-lg transition-all" title="戻る"></div>
+
+            <!-- Hotspot: 下部「鉄道定期券」項目 -> 画面3 (定期券情報)へ -->
+            <div id="s4-to-s3" class="absolute left-[4%] top-[84%] w-[92%] h-[6%] cursor-pointer hover:bg-pink-500/10 rounded-xl transition-all" title="鉄道定期券"></div>
+        </div>
+
+
+        <!-- ========================================== -->
+        <!-- SCREEN 5: 画面5（鉄道定期券メニュー 発売額¥39,530） -->
+        <!-- ========================================== -->
+        <div id="screen-5" class="page-transition absolute inset-0 w-full h-full bg-black hidden">
+            <img src="watermarked_img_2834693054472815741.jpg" class="w-full h-full object-cover select-none" alt="Screen 5">
+            
+            <!-- Hotspot: 左上「＜ 戻る」 -> 画面1へ戻る -->
+            <div id="s5-back" class="absolute left-[2%] top-[5%] w-[25%] h-[6%] cursor-pointer hover:bg-pink-500/10 rounded-lg transition-all" title="戻る"></div>
+
+            <!-- Hotspot: 購入済みの定期券「新高円寺 ⇔ 西新宿」カードタップ -> 画面3へ -->
+            <div id="s5-to-s3" class="absolute left-[4%] top-[43%] w-[92%] h-[40%] cursor-pointer hover:bg-pink-500/10 rounded-2xl transition-all" title="定期券詳細"></div>
+        </div>
+
+        <!-- Simulated Home Indicator -->
+        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-black rounded-full z-50 pointer-events-none"></div>
+    </div>
+
+    <!-- JavaScript Navigation Handling -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const screens = {
+                1: document.getElementById('screen-1'),
+                3: document.getElementById('screen-3'),
+                4: document.getElementById('screen-4'),
+                5: document.getElementById('screen-5')
+            };
+
+            function showScreen(num) {
+                Object.keys(screens).forEach(key => {
+                    if (parseInt(key) === num) {
+                        screens[key].classList.remove('hidden');
+                    } else {
+                        screens[key].classList.add('hidden');
+                    }
+                });
+            }
+
+            // 1の「鉄道定期券」を押すと 3 (定期券情報モーダル) に
+            document.getElementById('s1-to-s3').addEventListener('click', () => showScreen(3));
+
+            // 1の「定期券メニュー」を押すと 5 (鉄道定期券メニュー) に
+            document.getElementById('s1-to-s5').addEventListener('click', () => showScreen(5));
+
+            // 1の「詳細」を押すと 4 (PASMO詳細) に
+            document.getElementById('s1-to-s4').addEventListener('click', () => showScreen(4));
+
+            // 3の「閉じる」または背景を押すと 1 に
+            document.getElementById('s3-close').addEventListener('click', () => showScreen(1));
+            document.getElementById('s3-bg-close').addEventListener('click', () => showScreen(1));
+            document.getElementById('s3-to-s5').addEventListener('click', () => showScreen(5));
+
+            // 4の「戻る」を押すと 1 に
+            document.getElementById('s4-back').addEventListener('click', () => showScreen(1));
+            // 4の「鉄道定期券」を押すと 3 の画像に飛ぶ
+            document.getElementById('s4-to-s3').addEventListener('click', () => showScreen(3));
+
+            // 5の「戻る」を押すと 1 に
+            document.getElementById('s5-back').addEventListener('click', () => showScreen(1));
+            // 5の定期券カードを押すと 3 に飛ぶ
+            document.getElementById('s5-to-s3').addEventListener('click', () => showScreen(3));
+        });
+    </script>
+</body>
+</html>
