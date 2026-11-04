@@ -47,29 +47,28 @@
       width: 100%;
       height: 100%;
       display: none;
-      overflow-y: auto; /* 上部固定以外の画面や、通常表示時の備え */
+      overflow-y: auto;
       -webkit-overflow-scrolling: touch;
     }
     .screen.active {
       display: block;
     }
 
-    /* --- 画面1専用のレイアウト（上部固定 ＋ 下部スクロール） --- */
+    /* --- 画面1専用レイアウト（上部固定＋下部スクロール） --- */
     #screen1 {
       display: none;
       flex-direction: column;
-      overflow: hidden; /* 画面全体としてのスクロールを防止 */
+      overflow: hidden;
     }
     #screen1.active {
       display: flex;
     }
-    /* 上部の固定エリア（PASMO文字あたりまでを切り抜いて固定表示） */
     .screen1-header {
       position: sticky;
       top: 0;
       left: 0;
       width: 100%;
-      height: 130px; /* 固定する高さの調整用 */
+      height: 130px;
       overflow: hidden;
       z-index: 50;
       background: #fff;
@@ -79,8 +78,8 @@
       width: 100%;
       height: auto;
       display: block;
+      image-rendering: -webkit-optimize-contrast;
     }
-    /* 下部のスクロールエリア */
     .screen1-scrollable {
       position: relative;
       width: 100%;
@@ -92,6 +91,7 @@
       width: 100%;
       height: auto;
       display: block;
+      image-rendering: -webkit-optimize-contrast;
     }
 
     /* --- その他の画面（2〜5） --- */
@@ -100,21 +100,40 @@
       height: 100%;
       object-fit: fill;
       pointer-events: none;
+      image-rendering: -webkit-optimize-contrast;
     }
 
-    /* --- タップエリア（透明） --- */
+    /* --- タップエリア（確認用赤枠表示中） --- */
     .hotspot {
       position: absolute;
       cursor: pointer;
       z-index: 100;
-      background-color: transparent;
-      border: none;
+      background-color: rgba(255, 0, 0, 0.25);
+      border: 1px solid red;
     }
 
-    /* --- 画面1内のタップ位置（スクロール領域内での位置） --- */
-    #screen1 .spot-train-pass { top: 38%; left: 5%; width: 90%; height: 13%; }
-    #screen1 .spot-details { top: 23%; left: 79%; width: 16%; height: 9%; }
-    #screen1 .spot-pass-menu { top: 58%; left: 31%; width: 38%; height: 7%; }
+    /* --- 画面1の修正後のタップ位置 --- */
+    /* 鉄道定期券（カード下部の白いエリア） */
+    #screen1 .spot-train-pass { 
+      top: 57.5%; 
+      left: 5%; 
+      width: 90%; 
+      height: 13%; 
+    }
+    /* 詳細（「i」マーク） */
+    #screen1 .spot-details { 
+      top: 45.5%; 
+      left: 79%; 
+      width: 16%; 
+      height: 9%; 
+    }
+    /* 定期券メニュー（枠線ボタン） */
+    #screen1 .spot-pass-menu { 
+      top: 71%; 
+      left: 31%; 
+      width: 38%; 
+      height: 7%; 
+    }
 
     /* --- 画面2〜5のタップ位置 --- */
     #screen2 .spot-train-menu { top: 86.5%; left: 32%; width: 36%; height: 4%; }
@@ -132,13 +151,11 @@
 <body>
 
   <div class="app-container">
-    <!-- 画面 1（上部固定 ＋ 下部スクロール構造） -->
+    <!-- 画面 1 -->
     <div id="screen1" class="screen active">
-      <!-- 固定するヘッダー（PASMO文字より上） -->
       <div class="screen1-header">
         <img src="1.jpg" alt="画面1 ヘッダー">
       </div>
-      <!-- スクロールできる下部エリア -->
       <div class="screen1-scrollable">
         <img src="1.jpg" alt="画面1 ボディ" style="margin-top: -130px;">
         <div class="hotspot spot-train-pass" onclick="goToScreen('screen2')"></div>
