@@ -46,97 +46,97 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      pointer-events: none; /* 画像自体のドラッグ等を防止 */
+      pointer-events: none;
     }
 
-    /* --- タップエリアの共通設定 --- */
+    /* --- タップエリアの設定 --- */
     .hotspot {
       position: absolute;
       cursor: pointer;
       z-index: 100;
-      /* ↓ タップ範囲を分かりやすく半透明の赤色にしています。位置が合ったら「rgba(255, 0, 0, 0.2)」を「transparent」に変更してください */
+      /* 位置確認用の赤枠（確定したら transparent に変更） */
       background-color: rgba(255, 0, 0, 0.25);
       border: 1px solid red;
     }
 
-    /* --- 画面1 --- */
-    /* 鉄道定期券（下のグレー枠） */
+    /* --- 画面1（1.jpg）のタップ位置 --- */
+    /* 鉄道定期券（中央の白い四角いエリア） */
     #screen1 .spot-train-pass {
-      top: 59%;
+      top: 57.5%;
       left: 5%;
       width: 90%;
-      height: 8%;
+      height: 13%;
     }
-    /* 定期券メニュー（下部ボタン） */
-    #screen1 .spot-pass-menu {
-      top: 90%;
-      left: 5%;
-      width: 90%;
-      height: 6%;
-    }
-    /* 詳細（「i」マーク周辺） */
+    /* 詳細（右上 i アイコン） */
     #screen1 .spot-details {
-      top: 46%;
-      left: 80%;
-      width: 15%;
-      height: 8%;
+      top: 45.5%;
+      left: 79%;
+      width: 16%;
+      height: 9%;
+    }
+    /* 定期券メニュー（中央下の枠） */
+    #screen1 .spot-pass-menu {
+      top: 71%;
+      left: 31%;
+      width: 38%;
+      height: 7%;
     }
 
-    /* --- 画面2 --- */
+    /* --- 画面2（2.jpg）のタップ位置 --- */
     /* 鉄道定期券メニュー */
     #screen2 .spot-train-menu {
-      top: 86%;
-      left: 30%;
-      width: 40%;
-      height: 5%;
+      top: 86.5%;
+      left: 32%;
+      width: 36%;
+      height: 4%;
     }
-    /* 閉じる（右上 ×） */
+    /* 閉じる（右上 × ボタン） */
     #screen2 .spot-close {
-      top: 41%;
-      left: 85%;
-      width: 12%;
-      height: 5%;
+      top: 41.5%;
+      left: 86%;
+      width: 10%;
+      height: 4%;
     }
 
-    /* --- 画面3 --- */
+    /* --- 画面3（3.jpg）のタップ位置 --- */
     /* 戻る（左上 ＜戻る） */
     #screen3 .spot-back {
-      top: 5%;
+      top: 5.5%;
       left: 0%;
-      width: 25%;
-      height: 6%;
+      width: 22%;
+      height: 5%;
     }
 
-    /* --- 画面4 --- */
+    /* --- 画面4（4.jpg）のタップ位置 --- */
     /* 鉄道定期券 */
     #screen4 .spot-train-pass {
-      top: 84%;
+      top: 85.5%;
       left: 5%;
       width: 90%;
-      height: 6%;
+      height: 5%;
     }
     /* 戻る（左上 ＜戻る） */
     #screen4 .spot-back {
-      top: 5%;
+      top: 5.5%;
       left: 0%;
-      width: 25%;
-      height: 6%;
+      width: 22%;
+      height: 5%;
     }
 
-    /* --- 画面5 --- */
+    /* --- 画面5（5.jpg）のタップ位置 --- */
     /* 鉄道定期券 */
     #screen5 .spot-train-pass {
       top: 76%;
       left: 5%;
       width: 90%;
-      height: 7%;
+      height: 6%;
     }
-    /* 閉じる（右上 ×） */
+    /* 閉じる（右上 × ボタン） */
     #screen5 .spot-close {
-      top: 63%;
-      left: 85%;
-      width: 12%;
-      height: 5%;
+      top: 63.5%;
+      left: 86%;
+      width: 10%;
+      height: 4%;
     }
   </style>
 </head>
@@ -147,13 +147,13 @@
     <div id="screen1" class="screen active">
       <img src="1.jpg" alt="画面1">
       <div class="hotspot spot-train-pass" onclick="goToScreen('screen2')"></div>
-      <div class="hotspot spot-pass-menu" onclick="goToScreen('screen5')"></div>
       <div class="hotspot spot-details" onclick="goToScreen('screen4')"></div>
+      <div class="hotspot spot-pass-menu" onclick="goToScreen('screen5')"></div>
     </div>
 
     <!-- 画面 2 -->
     <div id="screen2" class="screen">
-      <img src="1.jpg" alt="画面2">
+      <img src="2.jpg" alt="画面2">
       <div class="hotspot spot-train-menu" onclick="goToScreen('screen3')"></div>
       <div class="hotspot spot-close" onclick="goToScreen('screen1')"></div>
     </div>
@@ -181,7 +181,6 @@
 
   <script>
     function goToScreen(screenId) {
-      console.log("遷移実行: " + screenId);
       const screens = document.querySelectorAll('.screen');
       screens.forEach(s => s.classList.remove('active'));
       
