@@ -12,21 +12,24 @@
       -webkit-tap-highlight-color: transparent;
     }
     body {
-      background-color: #000;
+      background-color: #222;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
     .app-container {
       position: relative;
-      width: 100%;
+      width: 100vw;
       max-width: 430px;
       height: 100vh;
       max-height: 932px;
-      background-color: #fff;
+      background-color: #000;
       overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     .screen {
       position: absolute;
@@ -43,84 +46,97 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      display: block;
+      pointer-events: none; /* 画像自体のドラッグ等を防止 */
     }
+
+    /* --- タップエリアの共通設定 --- */
     .hotspot {
       position: absolute;
       cursor: pointer;
-      /* デバッグ時に領域を確認したい場合は下行のコメントを解除 */
-      /* background: rgba(255, 0, 0, 0.3); */
+      z-index: 100;
+      /* ↓ タップ範囲を分かりやすく半透明の赤色にしています。位置が合ったら「rgba(255, 0, 0, 0.2)」を「transparent」に変更してください */
+      background-color: rgba(255, 0, 0, 0.25);
+      border: 1px solid red;
     }
 
-    /* --- 画面1のタップ領域 --- */
-    /* 鉄道定期券（カード下部） */
+    /* --- 画面1 --- */
+    /* 鉄道定期券（下のグレー枠） */
     #screen1 .spot-train-pass {
-      top: 61%;
-      left: 6%;
-      width: 88%;
-      height: 4.5%;
+      top: 59%;
+      left: 5%;
+      width: 90%;
+      height: 8%;
     }
-    /* 定期券メニュー（下部メニュー） */
+    /* 定期券メニュー（下部ボタン） */
     #screen1 .spot-pass-menu {
-      top: 91.5%;
-      left: 6%;
-      width: 88%;
-      height: 4.5%;
-    }
-    /* 詳細（カード横の i アイコン付近） */
-    #screen1 .spot-details {
-      top: 50.5%;
-      left: 81.5%;
-      width: 13%;
+      top: 90%;
+      left: 5%;
+      width: 90%;
       height: 6%;
     }
+    /* 詳細（「i」マーク周辺） */
+    #screen1 .spot-details {
+      top: 46%;
+      left: 80%;
+      width: 15%;
+      height: 8%;
+    }
 
-    /* --- 画面2のタップ領域 --- */
+    /* --- 画面2 --- */
     /* 鉄道定期券メニュー */
     #screen2 .spot-train-menu {
-      top: 86.5%;
-      left: 32%;
-      width: 36%;
-      height: 3.5%;
+      top: 86%;
+      left: 30%;
+      width: 40%;
+      height: 5%;
     }
-    /* 戻る（×ボタン） */
+    /* 閉じる（右上 ×） */
     #screen2 .spot-close {
-      top: 42%;
-      left: 87%;
-      width: 9%;
-      height: 3.5%;
+      top: 41%;
+      left: 85%;
+      width: 12%;
+      height: 5%;
     }
 
-    /* --- 画面4のタップ領域 --- */
-    /* 鉄道定期券 */
-    #screen4 .spot-train-pass {
-      top: 85.5%;
-      left: 6%;
-      width: 88%;
-      height: 4.5%;
-    }
-    /* 戻る（左上＜戻る） */
-    #screen4 .spot-back {
-      top: 7%;
-      left: 2%;
-      width: 18%;
-      height: 3.5%;
-    }
-
-    /* --- 画面5のタップ領域 --- */
-    /* 鉄道定期券 */
-    #screen5 .spot-train-pass {
-      top: 76.5%;
-      left: 6%;
-      width: 88%;
+    /* --- 画面3 --- */
+    /* 戻る（左上 ＜戻る） */
+    #screen3 .spot-back {
+      top: 5%;
+      left: 0%;
+      width: 25%;
       height: 6%;
     }
-    /* 戻る（×ボタン） */
+
+    /* --- 画面4 --- */
+    /* 鉄道定期券 */
+    #screen4 .spot-train-pass {
+      top: 84%;
+      left: 5%;
+      width: 90%;
+      height: 6%;
+    }
+    /* 戻る（左上 ＜戻る） */
+    #screen4 .spot-back {
+      top: 5%;
+      left: 0%;
+      width: 25%;
+      height: 6%;
+    }
+
+    /* --- 画面5 --- */
+    /* 鉄道定期券 */
+    #screen5 .spot-train-pass {
+      top: 76%;
+      left: 5%;
+      width: 90%;
+      height: 7%;
+    }
+    /* 閉じる（右上 ×） */
     #screen5 .spot-close {
-      top: 64%;
-      left: 87%;
-      width: 9%;
-      height: 3.5%;
+      top: 63%;
+      left: 85%;
+      width: 12%;
+      height: 5%;
     }
   </style>
 </head>
@@ -130,41 +146,42 @@
     <!-- 画面 1 -->
     <div id="screen1" class="screen active">
       <img src="1.jpg" alt="画面1">
-      <div class="hotspot spot-train-pass" onclick="showScreen('screen2')"></div>
-      <div class="hotspot spot-pass-menu" onclick="showScreen('screen5')"></div>
-      <div class="hotspot spot-details" onclick="showScreen('screen4')"></div>
+      <div class="hotspot spot-train-pass" onclick="goToScreen('screen2')"></div>
+      <div class="hotspot spot-pass-menu" onclick="goToScreen('screen5')"></div>
+      <div class="hotspot spot-details" onclick="goToScreen('screen4')"></div>
     </div>
 
     <!-- 画面 2 -->
     <div id="screen2" class="screen">
       <img src="1.jpg" alt="画面2">
-      <div class="hotspot spot-train-menu" onclick="showScreen('screen3')"></div>
-      <div class="hotspot spot-close" onclick="showScreen('screen1')"></div>
+      <div class="hotspot spot-train-menu" onclick="goToScreen('screen3')"></div>
+      <div class="hotspot spot-close" onclick="goToScreen('screen1')"></div>
     </div>
 
     <!-- 画面 3 -->
     <div id="screen3" class="screen">
       <img src="3.jpg" alt="画面3">
-      <div class="hotspot" style="top: 7%; left: 2%; width: 18%; height: 3.5%;" onclick="showScreen('screen1')"></div>
+      <div class="hotspot spot-back" onclick="goToScreen('screen1')"></div>
     </div>
 
     <!-- 画面 4 -->
     <div id="screen4" class="screen">
       <img src="4.jpg" alt="画面4">
-      <div class="hotspot spot-train-pass" onclick="showScreen('screen3')"></div>
-      <div class="hotspot spot-back" onclick="showScreen('screen1')"></div>
+      <div class="hotspot spot-train-pass" onclick="goToScreen('screen3')"></div>
+      <div class="hotspot spot-back" onclick="goToScreen('screen1')"></div>
     </div>
 
     <!-- 画面 5 -->
     <div id="screen5" class="screen">
       <img src="5.jpg" alt="画面5">
-      <div class="hotspot spot-train-pass" onclick="showScreen('screen3')"></div>
-      <div class="hotspot spot-close" onclick="showScreen('screen1')"></div>
+      <div class="hotspot spot-train-pass" onclick="goToScreen('screen3')"></div>
+      <div class="hotspot spot-close" onclick="goToScreen('screen1')"></div>
     </div>
   </div>
 
   <script>
-    function showScreen(screenId) {
+    function goToScreen(screenId) {
+      console.log("遷移実行: " + screenId);
       const screens = document.querySelectorAll('.screen');
       screens.forEach(s => s.classList.remove('active'));
       
