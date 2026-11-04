@@ -52,31 +52,18 @@
       display: block;
     }
 
-    /* --- 画面1専用レイアウト（バナー完全隠し＋上部固定＋下部スクロール） --- */
+    /* --- 画面1専用レイアウト（バナーあり＋上部固定＋下部スクロール） --- */
     #screen1 {
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
     }
-    .screen1-content {
-      position: relative;
-      width: 100%;
-      /* バナー分をきれいに上に隠す調整 */
-      margin-top: -155px; 
-    }
-    .screen1-content img {
-      width: 100%;
-      height: auto;
-      display: block;
-      image-rendering: -webkit-optimize-contrast;
-    }
-
-    /* --- 上部固定ヘッダー（PASMOロゴのみを固定） --- */
+    /* 上部の固定ヘッダー（PASMOロゴとエラーバナーを含めて固定） */
     .sticky-header-mask {
       position: sticky;
       top: 0;
       left: 0;
       width: 100%;
-      height: 105px; 
+      height: 155px; 
       overflow: hidden;
       z-index: 50;
       background-color: #fff;
@@ -85,6 +72,18 @@
       width: 100%;
       height: auto;
       display: block;
+    }
+    /* スクロールする本体画像 */
+    .screen1-content {
+      position: relative;
+      width: 100%;
+      margin-top: -155px; 
+    }
+    .screen1-content img {
+      width: 100%;
+      height: auto;
+      display: block;
+      image-rendering: -webkit-optimize-contrast;
     }
 
     /* --- その他の画面（2〜5） --- */
@@ -96,7 +95,7 @@
       image-rendering: -webkit-optimize-contrast;
     }
 
-    /* --- タップエリア（透明） --- */
+    /* --- タップエリア（完全に透明・赤枠なし） --- */
     .hotspot {
       position: absolute;
       cursor: pointer;
@@ -105,22 +104,19 @@
       border: none;
     }
 
-    /* --- 画面1のタップ位置（ズレを修正済み） --- */
-    /* 鉄道定期券（カード下部） */
+    /* --- 画面1のタップ位置（バナーありの状態に合わせた位置） --- */
     #screen1 .spot-train-pass { 
       top: 57.5%; 
       left: 5%; 
       width: 90%; 
       height: 13%; 
     }
-    /* 詳細（iアイコン） */
     #screen1 .spot-details { 
       top: 45.5%; 
       left: 79%; 
       width: 16%; 
       height: 9%; 
     }
-    /* 定期券メニュー */
     #screen1 .spot-pass-menu { 
       top: 71%; 
       left: 31%; 
@@ -146,7 +142,7 @@
   <div class="app-container">
     <!-- 画面 1 -->
     <div id="screen1" class="screen active">
-      <!-- 固定されるヘッダー部分 -->
+      <!-- 固定されるヘッダー部分（バナー含む） -->
       <div class="sticky-header-mask">
         <img src="1.jpg" alt="ヘッダー固定">
       </div>
