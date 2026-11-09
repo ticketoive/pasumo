@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>PASMO画面遷移</title>
+  <title>PASMO</title>
   
-  <!-- アプリ風（フルスクリーン）にする設定 -->
+  <!-- iPhoneホーム画面追加時のフルスクリーン・アイコン設定 -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  
-  <!-- ホーム画面のアイコン設定 -->
   <link rel="apple-touch-icon" href="icon.jpeg">
 
   <style>
@@ -18,6 +16,7 @@
       margin: 0;
       padding: 0;
       -webkit-tap-highlight-color: transparent;
+      user-select: none;
     }
     html, body {
       width: 100%;
@@ -30,7 +29,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
     }
     .app-container {
       position: relative;
@@ -54,7 +53,7 @@
       display: block;
     }
 
-    /* --- 画面1専用レイアウト（上部固定＋下部スクロール） --- */
+    /* --- 画面1（上部バナー固定 ＋ 下部スクロール） --- */
     #screen1 {
       display: none;
     }
@@ -88,7 +87,7 @@
       image-rendering: -webkit-optimize-contrast;
     }
 
-    /* --- 通常画面（2〜7）のコンテナ構造 --- */
+    /* --- 通常画面（画面2〜8） --- */
     .screen-inner {
       position: relative;
       width: 100%;
@@ -102,7 +101,7 @@
       image-rendering: -webkit-optimize-contrast;
     }
 
-    /* --- タップエリア（完全に透明） --- */
+    /* --- 透明タップエリア --- */
     .hotspot {
       position: absolute;
       cursor: pointer;
@@ -111,37 +110,37 @@
       border: none;
     }
 
-    /* --- 画面1のタップ位置 --- */
-    /* 左上三本線メニュー（位置を下へずらし、縦幅を広げて押しやすく変更） */
-    #screen1 .spot-menu { top: 40px; left: 0px; width: 90px; height: 75px; z-index: 200; }
+    /* --- 各画面のホットスポット位置調整 --- */
+    /* 画面1 */
+    #screen1 .spot-menu { top: 38px; left: 0px; width: 90px; height: 75px; z-index: 200; }
     #screen1 .spot-train-pass { top: 57.5%; left: 5%; width: 90%; height: 13%; }
     #screen1 .spot-details { top: 45.5%; left: 79%; width: 16%; height: 9%; }
     #screen1 .spot-history { top: 45.5%; left: 60%; width: 18%; height: 9%; }
     #screen1 .spot-pass-menu { top: 71%; left: 31%; width: 38%; height: 7%; }
     #screen1 .spot-charge { top: 82.5%; left: 19%; width: 62%; height: 8%; }
 
-    /* --- 画面2のタップ位置 --- */
+    /* 画面2 */
     #screen2 .spot-train-menu { top: 86.5%; left: 32%; width: 36%; height: 4%; }
     #screen2 .spot-close { top: 41.5%; left: 86%; width: 10%; height: 4%; }
 
-    /* --- 画面3のタップ位置 --- */
+    /* 画面3 */
     #screen3 .spot-back { top: 5.5%; left: 0%; width: 22%; height: 5%; }
 
-    /* --- 画面4のタップ位置 --- */
+    /* 画面4 */
     #screen4 .spot-train-pass { top: 85.5%; left: 5%; width: 90%; height: 5%; }
     #screen4 .spot-back { top: 5.5%; left: 0%; width: 22%; height: 5%; }
 
-    /* --- 画面5のタップ位置 --- */
+    /* 画面5 */
     #screen5 .spot-train-pass { top: 76%; left: 5%; width: 90%; height: 6%; }
     #screen5 .spot-close { top: 63.5%; left: 86%; width: 10%; height: 4%; }
 
-    /* --- 画面6（サイドメニュー）のタップ位置 --- */
+    /* 画面6（サイドメニュー） */
     #screen6 .spot-overlay-close { top: 0%; left: 59%; width: 41%; height: 100%; position: absolute; }
 
-    /* --- 画面7（チャージ）のタップ位置 --- */
+    /* 画面7（チャージ） */
     #screen7 .spot-close { top: 20.5%; left: 85%; width: 12%; height: 5%; }
 
-    /* --- 画面8（残額履歴）のタップ位置 --- */
+    /* 画面8（残額履歴） */
     #screen8 .spot-back { top: 5.5%; left: 0%; width: 22%; height: 5%; position: fixed; z-index: 200; }
   </style>
 </head>
@@ -152,7 +151,6 @@
     <div id="screen1" class="screen active">
       <div class="sticky-header-mask">
         <img src="1.jpg" alt="ヘッダー固定">
-        <!-- 固定ヘッダー上のメニュータップ領域 -->
         <div class="hotspot spot-menu" onclick="goToScreen('screen6')"></div>
       </div>
       <div class="screen1-content">
